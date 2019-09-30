@@ -1,0 +1,2 @@
+This project is based on PHP and MYSQL.
+All architecture was builder using docker containers.
