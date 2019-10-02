@@ -6,8 +6,8 @@ require 'services/RecommendationSystemService.class.php';
 $servicie = new RecommendationSystemService();
 
 /* Get all places on database */
-d($servicie->showAllGroups());
-d($servicie->showAllPlaces());
+//d($servicie->showAllGroups());
+//d($servicie->showAllPlaces());
 
 $auxs_group = $servicie->showAllGroups();
 $auxs_poi = $servicie->showAllPlaces();
@@ -50,6 +50,7 @@ function distancia($lat1, $lon1, $lat2, $lon2) {
     $dist = number_format($dist, 2, '.', '');
     print_r("<pre>".print_r($dist,true)."</pre>");
     return $dist;
+
 }
     
    // echo distancia(-12.9813346,-38.4653612, -12.9741491,-38.4696483) . " Km<br />";
