@@ -8,11 +8,11 @@ $servicie = new RecommendationSystemService();
 /* Get all places on database */
 d($servicie->showAllGroups());
 d($servicie->showAllPlaces());
-d($servicie->getAvg());
+d($servicie->showAvg());
 
 $auxs_poi = $servicie->showAllPlaces();
 $auxs_group = $servicie->showAllGroups();
-$get_avg = $servicie->getAvg();
+$get_avg = $servicie->showAvg();
 
 
 
@@ -28,24 +28,18 @@ function getPoints($array){
     return $result;
 }
 
+function getRating($array){
 
-/** Função que calcula a distância do ponto de encontro do grupo para os pontos de interesse */
-function calculateDistance($auxs_poi, $auxs_group){
-
-    $result_poi = getPoints($auxs_poi);
-    $result_group = getPoints($auxs_group);
-    //print_r("<pre>".print_r($result_poi,true)."</pre>");
-
-    foreach($result_poi as $key => $value){
-
-        $result[$key]['distance'] = distancia(floatval($result_group[0]['latitude']), floatval( $result_group[0]['longitude']), floatval($result_poi[$key]['latitude']), floatval($result_poi[$key]['longitude'])); 
-        //print_r("<pre>".print_r($teste,true)."</pre>");
+    foreach($array as $key => $value){
+        $result[$key]['idPoi'] = $value->local_id;
+        $result[$key]['rating'] = $value->rating;
     }
+
     return $result;
 }
 
 /** Função que calcula a distância entre dois pontos através do método de Havesin */
-function distancia($lat1, $lon1, $lat2, $lon2) {
+function distance($lat1, $lon1, $lat2, $lon2) {
 
     $lat1 = deg2rad($lat1);
     $lat2 = deg2rad($lat2);
@@ -59,8 +53,40 @@ function distancia($lat1, $lon1, $lat2, $lon2) {
 
 }
 
-    $distancias = calculateDistance($auxs_poi, $auxs_group);
-    print_r("<pre>".print_r($distancias,true)."</pre>");
+/** Função que calcula a distância do ponto de encontro do grupo para os pontos de interesse */
+function recommendation($auxs_poi, $auxs_group, $get_avg){
+
+    $poi = getPoints($auxs_poi); //print_r($poi);
+    $group = getPoints($auxs_group);
+    $rating = getRating($get_avg);
+
+    foreach($poi as $key => $value){
+
+        if($poi[$key]['id'] == $rating[$key]['idPoi']){
+
+            //$result[$key]['idPoi'] = $poi[$key]['id'];
+            $result[$key]['rating'] = $rating[$key]['rating'];
+            $result[$key]['distance'] = distance(floatval($group[0]['latitude']), floatval( $group[0]['longitude']), floatval($poi[$key]['latitude']), floatval($poi[$key]['longitude'])); 
+
+        }
+        
+        
+    }
+    rsort($result);
+
+    return $result;
+}
+
+    $recommendation = recommendation($auxs_poi, $auxs_group, $get_avg);
+    //arsort($recommendation);
+    foreach($recommendation as $result) {
+
+        //echo $result['rating'], '<br>';
+        echo "Rating of Group: ".number_format($result['rating'], 2,".", " "), '<br>';
+        echo "Distance of Group: ".$result['distance'], '<br><br>';
+    }
+    
+    print_r("<pre>".print_r($recommendation,true)."</pre>");
 
 
 ?>

@@ -41,7 +41,7 @@ class RecommendationSystem
         } catch (PDOException $e) { }
     }
 
-    public  function getAvg()
+    public function showAvg()
     {
 
         try {
@@ -49,7 +49,7 @@ class RecommendationSystem
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
             return $this->result_set->fetchAll(PDO::FETCH_OBJ);
-
+           
         } catch (PDOException $e) { }
     }
 }
