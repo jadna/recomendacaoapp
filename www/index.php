@@ -56,6 +56,7 @@ function distancia($lat1, $lon1, $lat2, $lon2) {
     $dist = number_format($dist, 2, '.', '');
     
     return $dist;
+
 }
 
     $distancias = calculateDistance($auxs_poi, $auxs_group);
