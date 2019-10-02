@@ -33,4 +33,13 @@ class RecommendationSystemService
             throw $th;
         }
     }
+
+    public function showAvg(){
+
+        try{
+            return $this->model->showAvg();
+        }catch (\Throwable $th){
+            throw $th;
+        }
+    }
 }
