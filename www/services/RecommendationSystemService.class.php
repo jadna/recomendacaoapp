@@ -24,4 +24,13 @@ class RecommendationSystemService
             throw $th;
         }
     }
+
+    public function showAllGroups(){
+
+        try{
+            return $this->model->showAllGroups();
+        }catch (\Throwable $th){
+            throw $th;
+        }
+    }
 }
