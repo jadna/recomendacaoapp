@@ -42,4 +42,13 @@ class RecommendationSystemService
             throw $th;
         }
     }
+
+    public function addAvaliacao(){
+
+        try{
+            return $this->model->addAvaliacao();
+        }catch (\Throwable $th){
+            throw $th;
+        }
+    }
 }
