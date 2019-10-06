@@ -33,7 +33,7 @@ class RecommendationSystem
     {
 
         try {
-            $this->query_str = ' SELECT * FROM pessoas ';
+            $this->query_str = ' SELECT * FROM pessoas where grupo = 2';
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
             return $this->result_set->fetchAll();
@@ -52,4 +52,17 @@ class RecommendationSystem
            
         } catch (PDOException $e) { }
     }
+
+    public function addAvaliacao()
+    {
+
+        try {
+            $this->query_str = ' SELECT AVG(avaliacao) as rating, local_id FROM avaliacao GROUP BY local_id ';
+            $this->result_set  =  $this->pdo->prepare($this->query_str);
+            $this->result_set->execute();
+            return $this->result_set->fetchAll(PDO::FETCH_OBJ);
+           
+        } catch (PDOException $e) { }
+    }
+
 }
