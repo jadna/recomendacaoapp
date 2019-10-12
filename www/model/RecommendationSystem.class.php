@@ -33,7 +33,24 @@ class RecommendationSystem
     {
 
         try {
-            $this->query_str = ' SELECT * FROM pessoas where grupo = 2';
+            $this->query_str = ' SELECT * FROM pessoas where grupo = 1';
+            $this->result_set  =  $this->pdo->prepare($this->query_str);
+            $this->result_set->execute();
+            return $this->result_set->fetchAll();
+
+        } catch (PDOException $e) { }
+    }
+
+    public  function showPreferencias($pessoa_id)
+    {
+
+        try {
+            $this->query_str = ' SELECT pre.preferencia
+            FROM pessoas p
+            INNER JOIN pessoas_preferecias pp ON (pp.pessoa_id = p.id)
+            INNER JOIN preferencias pre ON (pre.id = pp.preferencia_id)
+            where p.id ='.$pessoa_id;
+
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
             return $this->result_set->fetchAll();
@@ -60,7 +77,7 @@ class RecommendationSystem
             $this->query_str = ' SELECT AVG(a.avaliacao) as rating, a.local_id as local_id
                                     FROM avaliacao a
                                     INNER JOIN pessoas p ON (p.id = a.pessoa_id)
-                                    WHERE p.grupo = 2
+                                    WHERE p.grupo = 1
                                     GROUP BY local_id';
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
