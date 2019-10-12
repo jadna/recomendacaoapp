@@ -32,7 +32,16 @@ class RecommendationSystemService
         }catch (\Throwable $th){
             throw $th;
         }
-    }
+    } 
+
+    public function showPreferencias($pessoa_id){
+    
+        try{
+            return $this->model->showPreferencias($pessoa_id);
+        }catch (\Throwable $th){
+            throw $th;
+        }
+    } 
 
     public function showAvg(){
 
