@@ -155,7 +155,7 @@ function recommendation($auxs_poi, $auxs_group, $get_avg){
     foreach($groupDistance as $value){ 
 
         $pref_pessoas = $servicie->showPreferencias($value['id']);
-        if($value['id'] != $groupDistance[1]['id']){
+        if($value['id'] != $groupDistance[5]['id']){
             
             echo "Nome: ".$value['nome']
             ." Latitude: ".$value['latitude']
@@ -238,9 +238,11 @@ function recommendation($auxs_poi, $auxs_group, $get_avg){
     //print_r("<pre>".print_r($recommendation,true)."</pre>");
 
 
+
+
+    /** Organizar mostrar  tudo organizado mostrar os pontos de interesses
+     * como P1, p2... colocar a latitude e longitude
+     * Colocar os usuarios com a distancia e sua preferencias
+     * Além de multipliar  a distancia pela media das avaliações */
 ?>
 
-/** Organizar mostrar  tudo organizado mostrar os pontos de interesses
-como P1, p2... colocar a latitude e longitude
-Colocar os usuarios com a distancia e sua preferencias
-Além de multipliar  a distancia pela media das avaliações */

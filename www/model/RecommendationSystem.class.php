@@ -33,7 +33,7 @@ class RecommendationSystem
     {
 
         try {
-            $this->query_str = ' SELECT * FROM pessoas where grupo = 1';
+            $this->query_str = ' SELECT * FROM pessoas where grupo = 2';
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
             return $this->result_set->fetchAll();
