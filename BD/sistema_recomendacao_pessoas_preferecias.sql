@@ -16,30 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `pessoas`
+-- Table structure for table `pessoas_preferecias`
 --
 
-DROP TABLE IF EXISTS `pessoas`;
+DROP TABLE IF EXISTS `pessoas_preferecias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pessoas` (
+CREATE TABLE `pessoas_preferecias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `latitude` varchar(50) NOT NULL,
-  `longitude` varchar(50) NOT NULL,
-  `grupo` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `pessoa_id` int(11) NOT NULL,
+  `preferencia_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_pessoas_preferecias_1_idx` (`pessoa_id`),
+  KEY `fk_pessoas_preferecias_2_idx` (`preferencia_id`),
+  CONSTRAINT `fk_pessoas_preferecias_1` FOREIGN KEY (`pessoa_id`) REFERENCES `pessoas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pessoas_preferecias_2` FOREIGN KEY (`preferencia_id`) REFERENCES `preferencias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pessoas`
+-- Dumping data for table `pessoas_preferecias`
 --
 
-LOCK TABLES `pessoas` WRITE;
-/*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
-INSERT INTO `pessoas` VALUES (1,'Maria','-23.557948','-46.732494',1),(2,'Dimi','-23.573223','-46.668626',1),(3,'Gui','-23.572732','-46.670965',1),(4,'Laura','-23.573332','-46.668669',1),(5,'Leticia','-23.573677','-46.667917',1),(6,'Jose','-23.574455','-46.669001',1),(7,'Keyth','-23.484173','-46.588552',2),(8,'Cleyton','-23.485009','-46.587393',2),(9,'Jam','-23.485619','-46.589174',2);
-/*!40000 ALTER TABLE `pessoas` ENABLE KEYS */;
+LOCK TABLES `pessoas_preferecias` WRITE;
+/*!40000 ALTER TABLE `pessoas_preferecias` DISABLE KEYS */;
+INSERT INTO `pessoas_preferecias` VALUES (1,7,9),(2,7,2),(3,7,19),(4,8,7),(5,8,2),(6,8,19),(7,9,7),(8,9,2),(9,9,19);
+/*!40000 ALTER TABLE `pessoas_preferecias` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

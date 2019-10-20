@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `pessoas`
+-- Table structure for table `preferencias`
 --
 
-DROP TABLE IF EXISTS `pessoas`;
+DROP TABLE IF EXISTS `preferencias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pessoas` (
+CREATE TABLE `preferencias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `latitude` varchar(50) NOT NULL,
-  `longitude` varchar(50) NOT NULL,
-  `grupo` int(11) NOT NULL,
+  `preferencia` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pessoas`
+-- Dumping data for table `preferencias`
 --
 
-LOCK TABLES `pessoas` WRITE;
-/*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
-INSERT INTO `pessoas` VALUES (1,'Maria','-23.557948','-46.732494',1),(2,'Dimi','-23.573223','-46.668626',1),(3,'Gui','-23.572732','-46.670965',1),(4,'Laura','-23.573332','-46.668669',1),(5,'Leticia','-23.573677','-46.667917',1),(6,'Jose','-23.574455','-46.669001',1),(7,'Keyth','-23.484173','-46.588552',2),(8,'Cleyton','-23.485009','-46.587393',2),(9,'Jam','-23.485619','-46.589174',2);
-/*!40000 ALTER TABLE `pessoas` ENABLE KEYS */;
+LOCK TABLES `preferencias` WRITE;
+/*!40000 ALTER TABLE `preferencias` DISABLE KEYS */;
+INSERT INTO `preferencias` VALUES (1,'(tourism)(museum)'),(2,'(amenity)(restaurant)'),(3,'(shop)(mall)'),(4,'(shop)(books)'),(5,'(amenity)(pharmacy)'),(6,'(amenity)(fuel)'),(7,'(amenity)(pub)'),(8,'(shop)(supermarket)'),(9,'(amenity)(fast_food)'),(10,'(amenity)(gym)'),(11,'(amenity)(bank)'),(12,'(amenity)(hospital)'),(13,'(amenity)(place_of_worship)'),(14,'(shop)(hobby)'),(15,'(shop)(toys)'),(16,'(amenity)(cinema)'),(17,'(shop)(bakery)'),(18,'(amenity)(car_rental)'),(19,'(amenity)(bar)'),(20,'(shop)(clothes)');
+/*!40000 ALTER TABLE `preferencias` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
