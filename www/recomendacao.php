@@ -5,10 +5,10 @@ require 'services/RecommendationSystemService.class.php';
 $servicie = new RecommendationSystemService();
 
 /* Get all places on database */
-d($servicie->showAllGroups());
-d($servicie->showAllPlaces());
-d($servicie->showAvg());
-d($servicie->showPreferencias(7));
+// d($servicie->showAllGroups());
+// d($servicie->showAllPlaces());
+// d($servicie->showAvg());
+// d($servicie->showPreferencias(7));
 
 $auxGrupo = $servicie->showAllGroups();
 
@@ -37,17 +37,24 @@ function perfilGrupo($auxGrupo){
     //print_r("<pre>".print_r($usuario,true)."</pre>"); 
 
     foreach($usuario as $key=>$value){
-        $auxPreferencias[$key] = $servicie->showPreferencias($value['id']);
+ 
+       $auxPreferencias[] = $servicie->showPreferencias($value['id'])->preferencia;
+   
     }
-
+   
+    
+    /*
     foreach($auxPreferencias as $key => $value){
 
-        $result[$key]['pgitreferencia'] = $value['preferencia'];
+        $result[$key]['pgitreferencia'] = $value->preferencia;
+        
         $result[$key]['nome'] = $value['nome'];
         $result[$key]['latitude'] = $value['latitude'];
         $result[$key]['longitude'] = $value['longitude'];   
        
     }
+    */
+
     print_r("<pre>".print_r($auxPreferencias,true)."</pre>"); 
     for($i=0; $i< count($usuario); $i++){
 
@@ -55,7 +62,7 @@ function perfilGrupo($auxGrupo){
         $preferenciasUsuarios[$i] = $servicie->showPreferencias($usuario[$i]['id']);
         foreach($preferenciasUsuarios as $key => $value){
 
-            $result[$key]['preferencia'] = $value['preferencia'];     
+            $result[$key]['preferencia'] = $value->preferencia;     
         }
         
     }
@@ -66,7 +73,7 @@ function perfilGrupo($auxGrupo){
     return $preferenciasUsuarios;
 
 }
-perfilGrupo($auxGrupo);
+//perfilGrupo($auxGrupo);
 //print_r("<pre>".print_r(perfilGrupo($auxGrupo),true)."</pre>"); 
 
 
@@ -84,16 +91,18 @@ perfilGrupo($auxGrupo);
 
 
 
-/*function GetDrivingDistance($lat1, $lat2, $long1, $long2)
+function GetDrivingDistance($lat1, $lat2, $long1, $long2)
 {
 
-    print_r($lat1);
+    //print_r($lat1);
     $key = "AIzaSyC97oj_73Oab6zrUkHfWH-gq7zF2omHkOo";
+    $key = 'AIzaSyBtZYh0ihnATs4hXq0Udrz15IZDRmvfn9c';
     $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$lat1.",".$long1."&destinations=".$lat2.",".$long2."&mode=driving&language=en&key=".$key;
-   print_r($url);
+ 
+    //print_r($url);
     //curl_setopt($ch, CURLOPT_URL, "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$lat1.",".$long1."&destinations=".$lat2.",".$long2."&mode=driving&language=en&key=AIzaSyC2JyVnACw_WJNJ7q7cSqkOsEAXy_4EgQE");
     $ch = curl_init();
-    print_r($ch);
+    //print_r($ch);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
@@ -111,7 +120,7 @@ perfilGrupo($auxGrupo);
 
 $teste = GetDrivingDistance(-12.9407711, -12.943778, -38.3692486, -38.385332);
 
-print_r($teste);*/
+print_r($teste);
 
 
 
