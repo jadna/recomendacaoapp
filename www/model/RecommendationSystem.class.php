@@ -53,7 +53,7 @@ class RecommendationSystem
 
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
-            return $this->result_set->fetch(PDO::FETCH_OBJ);
+            return $this->result_set->fetchAll(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) { }
     }

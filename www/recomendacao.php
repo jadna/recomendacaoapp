@@ -28,19 +28,33 @@ function getDadosPessoas($array){
 }
 
 
+d($servicie->showPreferencias(7));
+d($servicie->showPreferencias(8));
+//d($servicie->showPreferencias(9)->preferencia);
+
 
 function perfilGrupo($auxGrupo){
 
     $servicie = new RecommendationSystemService();
 
     $usuario = getDadosPessoas($auxGrupo);
-    //print_r("<pre>".print_r($usuario,true)."</pre>"); 
+   
 
     foreach($usuario as $key=>$value){
  
-       $auxPreferencias[] = $servicie->showPreferencias($value['id'])->preferencia;
+      //  print_r("<pre>". $servicie->showPreferencias($value['id']).'</pre>');
+        
+   // print_r("<pre>".print_r($servicie->showPreferencias($value['id']),true)."</pre>"); 
+
+       //$auxPreferencias[$key] = $servicie->showPreferencias($value['id'])[$key]['preferencia'];
+
+       foreach($servicie->showPreferencias($value['id']) as $key => $showPreferencias) {
+         $auxPreferencias[] = $showPreferencias['preferencia'];
+       }
    
     }
+
+    print_r("<pre>".print_r($auxPreferencias,true)."</pre>"); 
    
     
     /*
@@ -55,7 +69,7 @@ function perfilGrupo($auxGrupo){
     }
     */
 
-    print_r("<pre>".print_r($auxPreferencias,true)."</pre>"); 
+  //  print_r("<pre>".print_r($auxPreferencias,true)."</pre>"); 
     for($i=0; $i< count($usuario); $i++){
 
         //$preferenciasUsuarios[$i]['pessoa_id'] = $usuario[$i]['id'];
@@ -67,13 +81,13 @@ function perfilGrupo($auxGrupo){
         
     }
     //$teste = array_intersect($preferenciasUsuarios, $aux);
-    print_r("<pre> U".print_r($result,true)."</pre>"); 
+   // print_r("<pre> U".print_r($result,true)."</pre>"); 
 
 
-    return $preferenciasUsuarios;
+   // return $preferenciasUsuarios;
 
 }
-//perfilGrupo($auxGrupo);
+ perfilGrupo($auxGrupo);
 //print_r("<pre>".print_r(perfilGrupo($auxGrupo),true)."</pre>"); 
 
 
@@ -118,9 +132,9 @@ function GetDrivingDistance($lat1, $lat2, $long1, $long2)
     return array('distance' => $distance, 'time' => $time);
 }
 
-$teste = GetDrivingDistance(-12.9407711, -12.943778, -38.3692486, -38.385332);
+// $teste = GetDrivingDistance(-12.9407711, -12.943778, -38.3692486, -38.385332);
 
-print_r($teste);
+// print_r($teste);
 
 
 
