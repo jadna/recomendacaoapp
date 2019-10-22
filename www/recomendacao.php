@@ -87,40 +87,67 @@ function getAvaliacoes($auxGrupo, $locais){
 
     $servicie = new RecommendationSystemService();
     $usuario = getDadosPessoas($auxGrupo);
-    // d( $locais);
-    // d( $auxGrupo);
-    // exit();
-    foreach($locais as $key=>$value){
 
-        foreach($usuario as $key=>$valor){
+    for ($i=0; $i < 10; $i++) { 
 
-            $teste[$key] = $servicie->getAvaliacoes($value['id'], $valor['id']);
-
-        }
-    }
-
-    for ($i=0; $i < count($locais); $i++) { 
-
+        //echo "Locais: ".$locais[$i]['local'];
         for ($j=0; $j < count($usuario); $j++) { 
             
-            //d($servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']));
-           // d($locais[$i]['id']);
-           d($servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']));
 
-            $teste[$i][$j] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']);
-            //print_r("<pre>".print_r($servicie->getAvaliacoes(99, 7),true)."</pre>"); 
+            $retorno[$i][$j]['id'] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id'])[0]['id'];
+            $retorno[$i][$j]['pessoa_id'] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id'])[0]['pessoa_id'];
+            $retorno[$i][$j]['local_id'] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id'])[0]['local_id'];
+            $retorno[$i][$j]['avaliacao'] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id'])[0]['avaliacao'];
+  
+            //echo $retorno[$i][$j]['avaliacao'];
         }
+        
+        //echo "<br>";
     }
 
-    print_r("<pre>".print_r($teste,true)."</pre>");
+    print_r("<pre>".print_r($retorno,true)."</pre>");
 
 }
 
-$perfilGrupo = perfilGrupo($auxGrupo);
-$locais = getLocais($perfilGrupo);
-//print_r("<pre>".print_r($teste,true)."</pre>");
+function calculaDistancia($auxGrupo, $locais){
 
+    $servicie = new RecommendationSystemService();
+    $usuario = getDadosPessoas($auxGrupo);
+
+    //$distancia = GetDrivingDistance($locais[0]['latitude'], $usuario[0]['latitude'], $locais[0]['longitude'], $usuario[0]['longitude']);
+   // print_r("<pre>".print_r($distancia,true)."</pre>");
+
+    for ($i=0; $i < 10; $i++) { 
+
+        for ($j=0; $j < count($usuario); $j++) { 
+            
+            //$distancia[$i][$j]['pessoa_id']
+
+            $distancia[$i][$j] = GetDrivingDistance($usuario[$j]['latitude'], $usuario[$j]['longitude'], $locais[$i]['latitude'], $locais[$i]['longitude']);
+            $distancia[$i][$j]['nome_pessoa'] = $usuario[$j]['nome'];
+            $distancia[$i][$j]['pessoa_id'] = $usuario[$j]['id'];
+            $distancia[$i][$j]['local'] = $locais[$i]['local'];
+            $distancia[$i][$j]['amenity'] = $locais[$i]['amenity'];
+            $distancia[$i][$j]['local_id'] = $locais[$i]['id'];
+            
+            //sleep(3);
+            
+        }
+        
+       
+    }
+
+    print_r("<pre>".print_r($distancia,true)."</pre>");
+
+}
+
+echo "<br>";
+$perfilGrupo = perfilGrupo($auxGrupo);
+echo "<br>";
+$locais = getLocais($perfilGrupo);
+echo "<br>";
 getAvaliacoes($auxGrupo, $locais);
+calculaDistancia($auxGrupo, $locais);
 //print_r("<pre>".print_r(perfilGrupo($auxGrupo),true)."</pre>"); 
 
 
@@ -138,7 +165,7 @@ getAvaliacoes($auxGrupo, $locais);
 
 
 
-function GetDrivingDistance($lat1, $lat2, $long1, $long2)
+function GetDrivingDistance($lat1, $long1, $lat2, $long2)
 {
 
     //print_r($lat1);
@@ -149,14 +176,13 @@ function GetDrivingDistance($lat1, $lat2, $long1, $long2)
     //print_r($url);
     //curl_setopt($ch, CURLOPT_URL, "https://maps.googleapis.com/maps/api/distancematrix/json?origins=".$lat1.",".$long1."&destinations=".$lat2.",".$long2."&mode=driving&language=en&key=AIzaSyC2JyVnACw_WJNJ7q7cSqkOsEAXy_4EgQE");
     $ch = curl_init();
-    //print_r($ch);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     $result = curl_exec($ch);
-    print_r($result);
+    //print_r($result);
     curl_close($ch);
     $response = json_decode($result, true);
     $distance = $response['rows'][0]['elements'][0]['distance']['text'];

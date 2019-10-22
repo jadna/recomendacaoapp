@@ -104,11 +104,12 @@ class RecommendationSystem
 
         try {
             $this->query_str = " SELECT * FROM sistema_recomendacao.avaliacao
-             where local_id = ".$local_id. " and pessoa_id=".$pessoa_id;
+             where local_id = $local_id and pessoa_id = $pessoa_id";
             $this->result_set  =  $this->pdo->prepare($this->query_str);
             $this->result_set->execute();
-            echo   $this->query_str .'<br>';
-            return $this->result_set->fetchAll(PDO::FETCH_OBJ);
+            //echo   $this->query_str .'<br>';
+            //return $this->result_set->fetchAll(PDO::FETCH_OBJ);
+            return $this->result_set->fetchAll();
            
         } catch (PDOException $e) { }
     }
