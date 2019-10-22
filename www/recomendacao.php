@@ -28,8 +28,8 @@ function getDadosPessoas($array)
 }
 
 
-d($servicie->showPreferencias(7));
-d($servicie->showPreferencias(8));
+// d($servicie->showPreferencias(7));
+// d($servicie->showPreferencias(8));
 //d($servicie->showPreferencias(9)->preferencia);
 
 /**Esta função monta o perfi do grupo de acordo com as preferencias em comum dos usuarios */
@@ -86,9 +86,10 @@ function getLocais($perfilGrupo){
 function getAvaliacoes($auxGrupo, $locais){
 
     $servicie = new RecommendationSystemService();
-
     $usuario = getDadosPessoas($auxGrupo);
-
+    // d( $locais);
+    // d( $auxGrupo);
+    // exit();
     foreach($locais as $key=>$value){
 
         foreach($usuario as $key=>$valor){
@@ -99,19 +100,26 @@ function getAvaliacoes($auxGrupo, $locais){
     }
 
     for ($i=0; $i < count($locais); $i++) { 
+
         for ($j=0; $j < count($usuario); $j++) { 
+            
+            //d($servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']));
+           // d($locais[$i]['id']);
+           d($servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']));
+
             $teste[$i][$j] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']);
-            print_r("<pre>".print_r($servicie->getAvaliacoes(99, 7),true)."</pre>"); 
+            //print_r("<pre>".print_r($servicie->getAvaliacoes(99, 7),true)."</pre>"); 
         }
     }
 
-    
+    print_r("<pre>".print_r($teste,true)."</pre>");
 
 }
 
 $perfilGrupo = perfilGrupo($auxGrupo);
 $locais = getLocais($perfilGrupo);
-//print_r("<pre>".print_r($locais,true)."</pre>");
+//print_r("<pre>".print_r($teste,true)."</pre>");
+
 getAvaliacoes($auxGrupo, $locais);
 //print_r("<pre>".print_r(perfilGrupo($auxGrupo),true)."</pre>"); 
 
