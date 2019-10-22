@@ -59,5 +59,23 @@ class RecommendationSystemService
         }catch (\Throwable $th){
             throw $th;
         }
+    } 
+
+    public function getLocaisAmenity($amenity){
+
+        try{
+            return $this->model->getLocaisAmenity($amenity);
+        }catch (\Throwable $th){
+            throw $th;
+        }
+    }
+
+    public function getAvaliacoes($local_id, $pessoa_id){
+
+        try{
+            return $this->model->getAvaliacoes($local_id, $pessoa_id);
+        }catch (\Throwable $th){
+            throw $th;
+        }
     }
 }

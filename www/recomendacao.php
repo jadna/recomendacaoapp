@@ -32,7 +32,7 @@ d($servicie->showPreferencias(7));
 d($servicie->showPreferencias(8));
 //d($servicie->showPreferencias(9)->preferencia);
 
-
+/**Esta função monta o perfi do grupo de acordo com as preferencias em comum dos usuarios */
 function perfilGrupo($auxGrupo)
 {
 
@@ -49,46 +49,70 @@ function perfilGrupo($auxGrupo)
     }
 
 
-
     $preferencias_iguais =  array_count_values($auxPreferencias);
 
+    echo "Perfil do Grupo: ";
     foreach ($preferencias_iguais as $key => $preferencia) {
-        if ($preferencia >= 3) {
-            echo 'prefencia :' . $key . ' Opção escolhida: ' . $preferencia . ' vezes. <br/> ';
+        if ($preferencia >= count($usuario)) {
+            //echo 'preferencia :' . $key . ' Opção escolhida: ' . $preferencia . ' vezes. <br/> ';
+            echo $key.' ';
+            $perfilGrupo[] = $key;
         }
     }
 
+     return $perfilGrupo;
+}
 
-    /*
-    foreach($auxPreferencias as $key => $value){
+/**Pega os locais de acordo com o perfil definido na função perfilGrupo */
+function getLocais($perfilGrupo){
 
-        $result[$key]['pgitreferencia'] = $value->preferencia;
-        
-        $result[$key]['nome'] = $value['nome'];
-        $result[$key]['latitude'] = $value['latitude'];
-        $result[$key]['longitude'] = $value['longitude'];   
-       
-    }
-    */
+    $servicie = new RecommendationSystemService();
+   
+    foreach ($perfilGrupo as $key => $value) {
 
-    //  print_r("<pre>".print_r($auxPreferencias,true)."</pre>"); 
-    for ($i = 0; $i < count($usuario); $i++) {
-
-        //$preferenciasUsuarios[$i]['pessoa_id'] = $usuario[$i]['id'];
-        $preferenciasUsuarios[$i] = $servicie->showPreferencias($usuario[$i]['id']);
-        foreach ($preferenciasUsuarios as $key => $value) {
-
-            $result[$key]['preferencia'] = $value->preferencia;
+        foreach ($servicie->getLocaisAmenity($value) as $key => $return) {
+            $result[$key]['id'] = $return->id;
+            $result[$key]['local'] = $return->local;
+            $result[$key]['amenity'] = $return->amenity;
+            $result[$key]['latitude'] = $return->latitude;
+            $result[$key]['longitude'] = $return->longitude;
         }
     }
-    //$teste = array_intersect($preferenciasUsuarios, $aux);
-    // print_r("<pre> U".print_r($result,true)."</pre>"); 
 
+    return $result;
+    //print_r("<pre>".print_r($result,true)."</pre>"); 
+}
 
-    // return $preferenciasUsuarios;
+function getAvaliacoes($auxGrupo, $locais){
+
+    $servicie = new RecommendationSystemService();
+
+    $usuario = getDadosPessoas($auxGrupo);
+
+    foreach($locais as $key=>$value){
+
+        foreach($usuario as $key=>$valor){
+
+            $teste[$key] = $servicie->getAvaliacoes($value['id'], $valor['id']);
+
+        }
+    }
+
+    for ($i=0; $i < count($locais); $i++) { 
+        for ($j=0; $j < count($usuario); $j++) { 
+            $teste[$i][$j] = $servicie->getAvaliacoes($locais[$i]['id'], $usuario[$j]['id']);
+            print_r("<pre>".print_r($servicie->getAvaliacoes(99, 7),true)."</pre>"); 
+        }
+    }
+
+    
 
 }
-perfilGrupo($auxGrupo);
+
+$perfilGrupo = perfilGrupo($auxGrupo);
+$locais = getLocais($perfilGrupo);
+//print_r("<pre>".print_r($locais,true)."</pre>");
+getAvaliacoes($auxGrupo, $locais);
 //print_r("<pre>".print_r(perfilGrupo($auxGrupo),true)."</pre>"); 
 
 

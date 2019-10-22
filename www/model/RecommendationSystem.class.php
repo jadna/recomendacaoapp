@@ -86,4 +86,30 @@ class RecommendationSystem
         } catch (PDOException $e) { }
     }
 
+    public function getLocaisAmenity($amenity)
+    { 
+
+        try {
+            $this->query_str = " SELECT * FROM sistema_recomendacao.locais
+                                where amenity ='". $amenity."'";
+            $this->result_set  =  $this->pdo->prepare($this->query_str);
+            $this->result_set->execute();
+            return $this->result_set->fetchAll(PDO::FETCH_OBJ);
+           
+        } catch (PDOException $e) { }
+    }
+
+    public function getAvaliacoes($local_id, $pessoa_id)
+    { 
+
+        try {
+            $this->query_str = " SELECT * FROM sistema_recomendacao.avaliacao
+             where local_id = ".$local_id. "and pessoa_id=".$pessoa_id;
+            $this->result_set  =  $this->pdo->prepare($this->query_str);
+            $this->result_set->execute();
+            return $this->result_set->fetchAll(PDO::FETCH_OBJ);
+           
+        } catch (PDOException $e) { }
+    }
+
 }

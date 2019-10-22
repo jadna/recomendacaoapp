@@ -38,14 +38,14 @@ d($servicie->showAllGroups());
         $min_rating = 1; $max_rating = 5;
         $min_poi = 1; $max_poi = 99;
 
-        for($j=0; $j<=10; $j++){
+        for($j=0; $j<=100; $j++){
 
             $idLocal = $poi[$j]['id'];
             $rating[$j] = rand($min_rating, $max_rating);
             //$poi[$j] = $poi[$j];// = rand($min_poi, $max_poi);
 
-            $result[$j]['pessoa_id'] = $idPessoa;
-            $result[$j]['local_id'] = $idLocal;
+            $result[$j]['pessoa_id'] = 7;
+            $result[$j]['local_id'] = 99;
             $result[$j]['avaliacao'] = $rating[$j];
 
             echo "(".$idPessoa. ", ".$idLocal. ", ". $rating[$j],"), <br>";
