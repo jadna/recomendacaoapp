@@ -1,2 +1,3 @@
 This project is based on PHP and MYSQL.
 All architecture was builder using docker containers.
+É o projeto inicial de uma mestranda em constante aprendizado.
